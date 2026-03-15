@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Jogo de animais para criancas</title>
+  <desc id="desc">Ilustracao colorida com sol, grama e animais amigaveis para capa de jogo infantil.</desc>
+
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#b8ecff" />
+      <stop offset="100%" stop-color="#f2fbff" />
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#86d37a" />
+      <stop offset="100%" stop-color="#5ba95c" />
+    </linearGradient>
+  </defs>
+
+  <rect width="640" height="360" fill="url(#sky)" />
+  <circle cx="84" cy="78" r="42" fill="#ffd166" />
+  <rect y="250" width="640" height="110" fill="url(#ground)" />
+
+  <ellipse cx="200" cy="280" rx="70" ry="22" fill="#4f8f4f" opacity="0.35" />
+  <ellipse cx="430" cy="286" rx="76" ry="24" fill="#4f8f4f" opacity="0.35" />
+
+  <!-- Leao -->
+  <circle cx="200" cy="195" r="52" fill="#f4a261" />
+  <circle cx="200" cy="198" r="34" fill="#ffe8ba" />
+  <circle cx="186" cy="192" r="4" fill="#2f2f2f" />
+  <circle cx="214" cy="192" r="4" fill="#2f2f2f" />
+  <path d="M190 208 Q200 216 210 208" stroke="#2f2f2f" stroke-width="3" fill="none" stroke-linecap="round" />
+  <circle cx="162" cy="170" r="12" fill="#f4a261" />
+  <circle cx="238" cy="170" r="12" fill="#f4a261" />
+
+  <!-- Coelho -->
+  <ellipse cx="430" cy="205" rx="52" ry="44" fill="#ffffff" />
+  <ellipse cx="406" cy="150" rx="14" ry="38" fill="#ffffff" />
+  <ellipse cx="454" cy="150" rx="14" ry="38" fill="#ffffff" />
+  <ellipse cx="406" cy="151" rx="6" ry="28" fill="#ffd6e7" />
+  <ellipse cx="454" cy="151" rx="6" ry="28" fill="#ffd6e7" />
+  <circle cx="415" cy="201" r="4" fill="#2f2f2f" />
+  <circle cx="445" cy="201" r="4" fill="#2f2f2f" />
+  <circle cx="430" cy="212" r="4" fill="#ff9f9f" />
+
+  <text x="320" y="330" text-anchor="middle" font-family="Verdana, sans-serif" font-size="28" font-weight="700" fill="#224b2b">
+    Clique no Animal
+  </text>
+</svg>
