@@ -7,10 +7,10 @@
     <div class="games-grid">
         @foreach (var game in games)
         {
-            <NavLink class="game-tile" href="@game.Route" aria-label="Abrir jogo @game.Name">
+            <a class="game-tile" href="@game.Route" aria-label="Abrir jogo @game.Name">
                 <img class="game-image" src="@game.Image" alt="Capa do jogo @game.Name" />
                 <span class="play-pill">JOGAR</span>
-            </NavLink>
+            </a>
         }
     </div>
 </section>

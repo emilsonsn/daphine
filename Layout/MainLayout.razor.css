@@ -25,6 +25,7 @@
     font: 900 clamp(2.2rem, 7vw, 4rem)/1 "Trebuchet MS", "Gill Sans", sans-serif;
     color: #0b5967;
     text-shadow: 0 3px 0 #d8f7ff;
+    text-decoration: none;
 }
 
 .content {

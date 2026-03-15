@@ -11,6 +11,7 @@
 .game-tile {
     position: relative;
     display: block;
+    overflow: hidden;
     text-decoration: none;
     border-radius: 26px;
     padding: 0.7rem;
@@ -53,6 +54,7 @@
     color: #ffffff;
     background: linear-gradient(130deg, #ff6d57 0%, #ff8f39 100%);
     box-shadow: 0 12px 22px -15px rgba(255, 87, 51, 0.9);
+    z-index: 2;
 }
 
 .game-tile:hover .play-pill,
@@ -85,4 +87,5 @@
         min-width: 140px;
         min-height: 50px;
     }
+
 }

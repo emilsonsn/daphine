@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Jogo de arrastar</title>
+  <desc id="desc">Ilustracao com setas e pecas para simbolizar arrastar e soltar.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#bdefff" />
+      <stop offset="100%" stop-color="#ffe9c7" />
+    </linearGradient>
+  </defs>
+
+  <rect width="640" height="360" fill="url(#bg)" />
+
+  <text x="320" y="52" text-anchor="middle" font-family="Verdana, sans-serif" font-size="34" font-weight="700" fill="#0e5260">
+    Jogo de Arrastar
+  </text>
+
+  <rect x="70" y="98" width="210" height="190" rx="24" fill="#d8fff1" stroke="#7ed5bf" stroke-width="4" />
+  <rect x="360" y="98" width="210" height="190" rx="24" fill="#fff0d9" stroke="#f0c06b" stroke-width="4" />
+
+  <rect x="130" y="155" width="90" height="80" rx="18" fill="#4ecdc4" />
+  <rect x="420" y="155" width="90" height="80" rx="18" fill="#ff8f39" />
+
+  <path d="M250 195 H355" stroke="#2f7f96" stroke-width="8" stroke-linecap="round" />
+  <polygon points="355,195 335,180 335,210" fill="#2f7f96" />
+
+  <circle cx="175" cy="280" r="16" fill="#8b6cff" />
+  <circle cx="235" cy="280" r="16" fill="#ff7fa8" />
+  <circle cx="405" cy="280" r="16" fill="#5ea9ff" />
+  <circle cx="465" cy="280" r="16" fill="#ffd166" />
+</svg>
