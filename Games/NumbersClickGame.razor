@@ -1,0 +1,98 @@
+@page "/games/numbers-click"
+@using Daphine.Models
+@using Microsoft.JSInterop
+@inject Daphine.Services.Games.NumbersClickGameService GameService
+@inject Daphine.Services.Characters.DaphineCharacterService DaphineCharacter
+@inject IJSRuntime JS
+
+<div class="game-container">
+    <div class="daphine">
+        <img src="@DaphineCharacter.GetImagePath()" alt="Personagem Daphine" />
+    </div>
+
+    <div class="play-area">
+        <div class="instruction">
+            <h2>@instructionText</h2>
+        </div>
+
+        <div class="cards">
+            @foreach (var option in options)
+            {
+                <button class="card @(option.IsShaking ? "shake" : "")"
+                        @onclick="() => SelectOption(option)">
+                    <img src="@option.Image" alt="Mao representando o numero @option.Label" />
+                    <span class="number-label">@option.Label</span>
+                </button>
+            }
+        </div>
+    </div>
+
+    <audio @ref="audioRef"></audio>
+</div>
+
+@code {
+    private List<NumberOption> options = new();
+    private string targetNumberName = string.Empty;
+    private string targetNumberLabel = string.Empty;
+    private string instructionText = string.Empty;
+
+    private ElementReference audioRef;
+
+    protected override async Task OnInitializedAsync()
+    {
+        DaphineCharacter.SetSpeaking();
+        await PlayAudioAndWait("audio/welcome.mp3");
+        await StartRound();
+    }
+
+    private async Task StartRound()
+    {
+        var round = GameService.GenerateRound();
+
+        targetNumberName = round.TargetNumberName;
+        targetNumberLabel = round.TargetNumberLabel;
+        options = round.Options;
+
+        instructionText = $"Aperte o numero {targetNumberLabel}";
+        DaphineCharacter.SetSpeaking();
+
+        await PlayAudio($"audio/numbers/{targetNumberName}.mp3");
+    }
+
+    private async Task SelectOption(NumberOption option)
+    {
+        if (option.IsCorrect)
+        {
+            DaphineCharacter.SetHappy();
+
+            await PlayAudio(GameService.GetRandomSuccessAudio());
+
+            await Task.Delay(1500);
+
+            await StartRound();
+            StateHasChanged();
+        }
+        else
+        {
+            option.IsShaking = true;
+            DaphineCharacter.SetSad();
+
+            await PlayAudio(GameService.GetRandomErrorAudio());
+
+            await Task.Delay(500);
+
+            option.IsShaking = false;
+            DaphineCharacter.SetSpeaking();
+        }
+    }
+
+    private async Task PlayAudio(string src)
+    {
+        await JS.InvokeVoidAsync("playAudio", src);
+    }
+
+    private async Task PlayAudioAndWait(string src)
+    {
+        await JS.InvokeVoidAsync("playAudioAndWait", src);
+    }
+}

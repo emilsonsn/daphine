@@ -39,6 +39,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        DaphineCharacter.SetSpeaking();
+        await PlayAudioAndWait("audio/welcome.mp3");
         await StartRound();
     }
 
@@ -85,6 +87,11 @@
     private async Task PlayAudio(string src)
     {
         await JS.InvokeVoidAsync("playAudio", src);
+    }
+
+    private async Task PlayAudioAndWait(string src)
+    {
+        await JS.InvokeVoidAsync("playAudioAndWait", src);
     }
 
 }

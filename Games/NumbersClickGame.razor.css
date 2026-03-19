@@ -1,0 +1,167 @@
+:root {
+    --numbers-bg-1: #f6fbff;
+    --numbers-bg-2: #f1fff4;
+    --numbers-card-bg: #ffffff;
+    --numbers-card-border: #9fdbff;
+    --numbers-title: #174262;
+    --numbers-shadow: 0 10px 22px rgba(16, 57, 89, 0.14);
+}
+
+.game-container {
+    min-height: calc(100vh - 80px);
+    display: grid;
+    grid-template-columns: minmax(180px, 32vw) 1fr;
+    gap: 1.25rem;
+    align-items: stretch;
+    padding: 1rem;
+    border-radius: 18px;
+    background: linear-gradient(140deg, var(--numbers-bg-1), var(--numbers-bg-2));
+}
+
+.daphine {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0.5rem;
+}
+
+.daphine img {
+    width: min(100%, 320px);
+    max-height: min(72vh, 460px);
+    object-fit: contain;
+}
+
+.play-area {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 1rem;
+    min-height: 0;
+}
+
+.instruction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.75);
+    border: 2px solid #cdeaff;
+    border-radius: 14px;
+    padding: 0.7rem 1rem;
+}
+
+.instruction h2 {
+    margin: 0;
+    color: var(--numbers-title);
+    font-size: clamp(1.1rem, 1.4vw + 0.85rem, 2rem);
+    font-weight: 800;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(110px, 1fr));
+    gap: 0.85rem;
+    align-content: center;
+}
+
+.card {
+    border: 3px solid var(--numbers-card-border);
+    background: var(--numbers-card-bg);
+    border-radius: 16px;
+    box-shadow: var(--numbers-shadow);
+    padding: 0.55rem;
+    cursor: pointer;
+    display: grid;
+    gap: 0.3rem;
+    justify-items: center;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 24px rgba(16, 57, 89, 0.2);
+}
+
+.card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+}
+
+.number-label {
+    color: #0e4971;
+    font-size: clamp(1.05rem, 1.1vw + 0.75rem, 1.5rem);
+    font-weight: 800;
+    line-height: 1;
+}
+
+.shake {
+    animation: shake 0.35s linear;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-4px); }
+    100% { transform: translateX(0); }
+}
+
+@media (max-width: 900px) {
+    .game-container {
+        min-height: calc(100vh - 56px);
+        grid-template-columns: minmax(130px, 34vw) 1fr;
+        gap: 0.9rem;
+        padding: 0.75rem;
+    }
+
+    .cards {
+        gap: 0.6rem;
+    }
+
+    .card {
+        padding: 0.4rem;
+        border-radius: 12px;
+    }
+}
+
+@media (max-width: 720px), (max-height: 520px) {
+    .game-container {
+        min-height: calc(100vh - 48px);
+        grid-template-columns: minmax(112px, 33vw) 1fr;
+        gap: 0.6rem;
+        padding: 0.5rem;
+    }
+
+    .instruction {
+        padding: 0.45rem 0.6rem;
+    }
+
+    .instruction h2 {
+        font-size: clamp(0.95rem, 1.4vw + 0.5rem, 1.3rem);
+    }
+
+    .cards {
+        grid-template-columns: repeat(3, minmax(78px, 1fr));
+        gap: 0.45rem;
+    }
+
+    .card {
+        border-width: 2px;
+        padding: 0.3rem;
+    }
+}
+
+@media (max-width: 520px) and (orientation: portrait) {
+    .game-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
+
+    .daphine {
+        justify-content: center;
+    }
+
+    .daphine img {
+        max-height: 200px;
+    }
+}

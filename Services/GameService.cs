@@ -33,7 +33,7 @@ public class GameService
             {
                 Id = "numbers-click",
                 Name = "Clique nos Números",
-                Description = "Aprenda os números clicando nos porquinhos",
+                Description = "Aprenda os números clicando nas mãos",
                 Image = "/images/numbers-game.svg",
                 Route = "/games/numbers-click"
             },

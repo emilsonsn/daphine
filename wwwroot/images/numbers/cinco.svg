@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Mao com cinco dedos levantados">
+  <defs>
+    <style>
+      .stroke{stroke:#7a4b2b;stroke-width:5;stroke-linejoin:round;stroke-linecap:round}
+      .up{fill:#f4be8e}
+      .palm{fill:#f2b784}
+      .bg{fill:#f2fbff}
+    </style>
+  </defs>
+  <rect class="bg" x="8" y="8" width="224" height="224" rx="30"/>
+  <rect class="stroke up" x="40" y="34" width="28" height="98" rx="14"/>
+  <rect class="stroke up" x="74" y="34" width="28" height="98" rx="14"/>
+  <rect class="stroke up" x="108" y="34" width="28" height="98" rx="14"/>
+  <rect class="stroke up" x="142" y="34" width="28" height="98" rx="14"/>
+  <rect class="stroke up" x="176" y="34" width="28" height="98" rx="14"/>
+  <path class="stroke palm" d="M56 123c0-10 8-18 18-18h90c22 0 40 18 40 40v20c0 23-19 42-42 42H86c-26 0-46-21-46-46v-6c0-14 8-27 20-32l16-7z"/>
+</svg>
