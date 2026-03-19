@@ -36,12 +36,17 @@
     private string instructionText = "";
 
     private ElementReference audioRef;
+    private bool hasPlayedWelcome = false;
 
     protected override async Task OnInitializedAsync()
     {
-        DaphineCharacter.SetSpeaking();
-        await PlayAudioAndWait("audio/welcome.mp3");
-        await StartRound();
+        if (!hasPlayedWelcome)
+        {
+            hasPlayedWelcome = true;
+            DaphineCharacter.SetSpeaking();
+            await PlayAudioAndWait("audio/welcome.mp3");
+            await StartRound();
+        }
     }
 
     private async Task StartRound()
@@ -91,7 +96,7 @@
 
     private async Task PlayAudioAndWait(string src)
     {
-        await JS.InvokeVoidAsync("playAudioAndWait", src);
+        await JS.InvokeAsync<object>("playAudioAndWait", src);
     }
 
 }

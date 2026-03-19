@@ -1,18 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Mao com quatro dedos levantados">
   <defs>
     <style>
-      .stroke{stroke:#7a4b2b;stroke-width:5;stroke-linejoin:round;stroke-linecap:round}
-      .up{fill:#f4be8e}
-      .down{fill:#d8b49a}
+      .bg{fill:#eef9ff}
+      .stroke{stroke:#7a4b2b;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
       .palm{fill:#f2b784}
-      .bg{fill:#f2fbff}
+      .up{fill:#f4be8e}
+      .down{fill:#d7b59e}
+      .wrist{fill:#e4a56f}
+      .knuckle{stroke:#bb8459;stroke-width:3;stroke-linecap:round}
     </style>
   </defs>
   <rect class="bg" x="8" y="8" width="224" height="224" rx="30"/>
-  <rect class="stroke up" x="40" y="34" width="28" height="98" rx="14"/>
-  <rect class="stroke up" x="74" y="34" width="28" height="98" rx="14"/>
-  <rect class="stroke up" x="108" y="34" width="28" height="98" rx="14"/>
-  <rect class="stroke up" x="142" y="34" width="28" height="98" rx="14"/>
-  <rect class="stroke down" x="176" y="76" width="28" height="56" rx="14"/>
-  <path class="stroke palm" d="M56 123c0-10 8-18 18-18h90c22 0 40 18 40 40v20c0 23-19 42-42 42H86c-26 0-46-21-46-46v-6c0-14 8-27 20-32l16-7z"/>
+  <rect class="stroke wrist" x="88" y="185" width="68" height="32" rx="14"/>
+  <path class="stroke palm" d="M64 158c0-30 24-54 54-54h24c30 0 54 24 54 54v8c0 24-20 44-44 44H88c-24 0-44-20-44-44z"/>
+
+  <rect class="stroke up" x="88" y="44" width="26" height="86" rx="13"/>
+  <rect class="stroke up" x="116" y="38" width="26" height="92" rx="13"/>
+  <rect class="stroke up" x="142" y="46" width="24" height="84" rx="12"/>
+  <rect class="stroke up" x="168" y="54" width="23" height="76" rx="11"/>
+
+  <path class="stroke down" d="M83 160c-10 0-18-8-18-18 0-8 5-14 11-17l17-8c8-4 17-1 21 6s1 16-7 20l-14 7c-3 2-7 3-10 3z"/>
+
+  <line class="knuckle" x1="104" y1="148" x2="104" y2="168"/>
+  <line class="knuckle" x1="128" y1="148" x2="128" y2="170"/>
+  <line class="knuckle" x1="152" y1="150" x2="152" y2="171"/>
 </svg>

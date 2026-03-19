@@ -1,7 +1,7 @@
-@page "/games/numbers-click"
+@page "/games/color-click"
 @using Daphine.Models
 @using Microsoft.JSInterop
-@inject Daphine.Services.Games.NumbersClickGameService GameService
+@inject Daphine.Services.Games.ColorClickGameService GameService
 @inject Daphine.Services.Characters.DaphineCharacterService DaphineCharacter
 @inject IJSRuntime JS
 
@@ -20,8 +20,8 @@
             {
                 <button class="card @(option.IsShaking ? "shake" : "")"
                         @onclick="() => SelectOption(option)">
-                    <img src="@option.Image" alt="Mao representando o numero @option.Label" />
-                    <span class="number-label">@option.Label</span>
+                    <img src="@option.Image" alt="Cor @option.Label" />
+                    <span class="color-label">@option.Label</span>
                 </button>
             }
         </div>
@@ -31,9 +31,9 @@
 </div>
 
 @code {
-    private List<NumberOption> options = new();
-    private string targetNumberName = string.Empty;
-    private string targetNumberLabel = string.Empty;
+    private List<ColorOption> options = new();
+    private string targetColorName = string.Empty;
+    private string targetColorLabel = string.Empty;
     private string instructionText = string.Empty;
 
     private ElementReference audioRef;
@@ -54,17 +54,17 @@
     {
         var round = GameService.GenerateRound();
 
-        targetNumberName = round.TargetNumberName;
-        targetNumberLabel = round.TargetNumberLabel;
+        targetColorName = round.TargetColorName;
+        targetColorLabel = round.TargetColorLabel;
         options = round.Options;
 
-        instructionText = $"Aperte o numero {targetNumberLabel}";
+        instructionText = $"Aperte a cor {targetColorLabel}";
         DaphineCharacter.SetSpeaking();
 
-        await PlayAudio($"audio/numbers/{targetNumberName}.mp3");
+        await PlayAudio($"audio/colors/{targetColorName}.mp3");
     }
 
-    private async Task SelectOption(NumberOption option)
+    private async Task SelectOption(ColorOption option)
     {
         if (option.IsCorrect)
         {

@@ -1,4 +1,6 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
 
 <div class="page">
     <main class="main-shell">
@@ -6,6 +8,10 @@
             <a href="/">
                 <h1 class="title">Daphine.io</h1>
             </a>
+
+            <button class="sound-toggle" @onclick="ToggleBackgroundSound">
+                @(isMuted ? "Ativar som" : "Silenciar som")
+            </button>
         </header>
 
         <article class="content px-4">
@@ -13,3 +19,23 @@
         </article>
     </main>
 </div>
+
+@code {
+    private bool isMuted;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        isMuted = await JS.InvokeAsync<bool>("getBackgroundAudioMuted");
+        StateHasChanged();
+    }
+
+    private async Task ToggleBackgroundSound()
+    {
+        isMuted = await JS.InvokeAsync<bool>("toggleBackgroundAudioMuted");
+    }
+}

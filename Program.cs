@@ -14,6 +14,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddSingleton<GameService>();
 builder.Services.AddSingleton<AnimalClickGameService>();
 builder.Services.AddSingleton<NumbersClickGameService>();
+builder.Services.AddSingleton<ColorClickGameService>();
 builder.Services.AddSingleton<DaphineCharacterService>();
 
 await builder.Build().RunAsync();
