@@ -1,0 +1,201 @@
+@page "/games/cat-click"
+@using Microsoft.JSInterop
+@inject Daphine.Services.Games.CatBucketGameService GameService
+@inject Daphine.Services.Characters.DaphineCharacterService DaphineCharacter
+@inject IJSRuntime JS
+
+<div class="game-container">
+    <div class="daphine">
+        <img src="@DaphineCharacter.GetImagePath()" alt="Personagem Daphine" />
+    </div>
+
+    <div class="play-area">
+        <div class="instruction">
+            <h2>@instructionText</h2>
+        </div>
+
+        <div class="bucket-board">
+            @foreach (var bucket in buckets)
+            {
+                <button class="bucket slot-@bucket.SlotIndex @(bucket.IsShaking ? "shake" : "") @(isShuffling ? "shuffle" : "")"
+                        @onclick="() => SelectBucket(bucket)"
+                        disabled="@(!canSelect || isHandlingSelection)">
+                    <img class="box-image" src="images/cat/box.png" alt="Caixa" />
+
+                    @if (bucket.IsOpened)
+                    {
+                        if (bucket.Id == catBucketId)
+                        {
+                            <img class="cat @(bucket.IsCatGoingUnder ? "go-under" : "")" src="images/animals/gato.png" alt="Gato saindo do balde" />
+                        }
+                        else
+                        {
+                            <span class="miss-mark">X</span>
+                        }
+                    }
+                </button>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private readonly List<BucketState> buckets = new()
+    {
+        new BucketState { Id = 1, SlotIndex = 0 },
+        new BucketState { Id = 2, SlotIndex = 1 },
+        new BucketState { Id = 3, SlotIndex = 2 }
+    };
+
+    private int catBucketId;
+    private string instructionText = string.Empty;
+
+    private bool hasPlayedWelcome;
+    private bool canSelect;
+    private bool isHandlingSelection;
+    private bool isShuffling;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!hasPlayedWelcome)
+        {
+            hasPlayedWelcome = true;
+            DaphineCharacter.SetSpeaking();
+            await PlayAudioAndWait("audio/welcome.mp3");
+            await StartRound();
+        }
+    }
+
+    private async Task StartRound()
+    {
+        isHandlingSelection = true;
+        canSelect = false;
+
+        ResetRoundVisuals();
+        catBucketId = GameService.PickCatBucketId();
+
+        instructionText = "Olhe onde o gato esta";
+        DaphineCharacter.SetSpeaking();
+
+        var catBucket = buckets.First(x => x.Id == catBucketId);
+        catBucket.IsOpened = true;
+        catBucket.IsCatGoingUnder = false;
+        StateHasChanged();
+
+        await PlayAudioAndWait("audio/animals/gato.mp3");
+        await Task.Delay(350);
+
+        catBucket.IsCatGoingUnder = true;
+        StateHasChanged();
+
+        await Task.Delay(520);
+
+        catBucket.IsOpened = false;
+        catBucket.IsCatGoingUnder = false;
+
+        instructionText = "Embaralhando os baldes...";
+        isShuffling = true;
+        StateHasChanged();
+
+        await ShuffleBuckets();
+
+        isShuffling = false;
+        canSelect = true;
+        isHandlingSelection = false;
+        instructionText = "Onde esta o gato?";
+        StateHasChanged();
+    }
+
+    private async Task ShuffleBuckets()
+    {
+        var shuffleCount = Random.Shared.Next(2, 4);
+        for (var i = 0; i < shuffleCount; i++)
+        {
+            await Task.Delay(950);
+
+            var currentOrder = buckets
+                .OrderBy(x => x.SlotIndex)
+                .Select(x => x.Id)
+                .ToList();
+
+            var newOrder = GameService.ShuffleBucketOrder(currentOrder);
+
+            for (var slot = 0; slot < newOrder.Count; slot++)
+            {
+                var bucket = buckets.First(x => x.Id == newOrder[slot]);
+                bucket.SlotIndex = slot;
+            }
+
+            StateHasChanged();
+        }
+
+        await Task.Delay(500);
+    }
+
+    private async Task SelectBucket(BucketState bucket)
+    {
+        if (!canSelect || isHandlingSelection)
+        {
+            return;
+        }
+
+        isHandlingSelection = true;
+        canSelect = false;
+
+        bucket.IsOpened = true;
+        StateHasChanged();
+
+        if (bucket.Id == catBucketId)
+        {
+            DaphineCharacter.SetHappy();
+            instructionText = "Voce acertou!";
+            StateHasChanged();
+
+            await PlayAudioAndWait(GameService.GetRandomSuccessAudio());
+            await Task.Delay(1000);
+
+            await StartRound();
+            return;
+        }
+
+        DaphineCharacter.SetSad();
+        instructionText = "Ops, nao foi esse. Tente de novo!";
+        bucket.IsShaking = true;
+        StateHasChanged();
+
+        await PlayAudioAndWait(GameService.GetRandomErrorAudio());
+        await Task.Delay(450);
+
+        bucket.IsShaking = false;
+        bucket.IsOpened = false;
+
+        canSelect = true;
+        isHandlingSelection = false;
+        instructionText = "Onde esta o gato?";
+        StateHasChanged();
+    }
+
+    private void ResetRoundVisuals()
+    {
+        foreach (var bucket in buckets)
+        {
+            bucket.IsOpened = false;
+            bucket.IsShaking = false;
+            bucket.IsCatGoingUnder = false;
+        }
+    }
+
+    private async Task PlayAudioAndWait(string src)
+    {
+        await JS.InvokeAsync<object>("playAudioAndWait", src);
+    }
+
+    private sealed class BucketState
+    {
+        public int Id { get; set; }
+        public int SlotIndex { get; set; }
+        public bool IsOpened { get; set; }
+        public bool IsShaking { get; set; }
+        public bool IsCatGoingUnder { get; set; }
+    }
+}
