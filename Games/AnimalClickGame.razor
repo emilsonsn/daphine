@@ -37,6 +37,7 @@
 
     private ElementReference audioRef;
     private bool hasPlayedWelcome = false;
+    private bool isHandlingSelection = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -64,29 +65,36 @@
 
     private async Task SelectOption(AnimalOption option)
     {
+        if (isHandlingSelection)
+        {
+            return;
+        }
+
+        isHandlingSelection = true;
+
         if (option.IsCorrect)
         {
             DaphineCharacter.SetHappy();
 
-            await PlayAudio(GameService.GetRandomSuccessAudio());
+            await PlayAudioAndWait(GameService.GetRandomSuccessAudio());
 
-            await Task.Delay(1500);
+            await Task.Delay(1000);
 
             await StartRound();
             StateHasChanged();
+            isHandlingSelection = false;
+            return;
         }
-        else
-        {
-            option.IsShaking = true;
-            DaphineCharacter.SetSad();
 
-            await PlayAudio(GameService.GetRandomErrorAudio());
+        option.IsShaking = true;
+        DaphineCharacter.SetSad();
 
-            await Task.Delay(500);
+        await PlayAudio(GameService.GetRandomErrorAudio());
 
-            option.IsShaking = false;
-            DaphineCharacter.SetSpeaking();
-        }
+        await Task.Delay(500);
+
+        option.IsShaking = false;
+        isHandlingSelection = false;
     }
 
     private async Task PlayAudio(string src)
